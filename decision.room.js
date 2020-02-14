@@ -27,17 +27,19 @@ module.exports={
 		var resources=this.dropedEnergy(room)
 		//填spawn
 		if(room.energyAvailable<room.energyCapacityAvailable){
+			//console.log("TIAN")
 			var spawn=room.spawns[0]
 			var s=spawn.store.getFreeCapacity()-room.getAmountByTo(spawn.id,'energy')
 			if(s>0){
 				for(var a of resources){
 					var e=a.amount-room.getAmountByFrom(a.id,'energy')
-					if(e>Math.floor(s/100)){
+					s=spawn.store.getFreeCapacity()-room.getAmountByTo(spawn.id,'energy')
+					if(e>100&&s>0){
 						for(var i=0;i<Math.floor(s/100);i++){
-							room.creatTask(TASK_CARRY,100,"energy",a.id,room.spawn[0].id,carry)
+							room.creatTask(TASK_CARRY,100,"energy",a.id,room.spawn[0].id,carry,true)
 						}
 						if(s%100!=0){
-							room.creatTask(TASK_CARRY,s%100,"energy",a.id,room.spawn[0].id,carry)
+							room.creatTask(TASK_CARRY,s%100,"energy",a.id,room.spawn[0].id,carry,true)
 						}
 					}
 				}
@@ -48,9 +50,10 @@ module.exports={
 		if(p>0){
 			for(var a of resources){
 				var e=a.amount-room.getAmountByFrom(a.id,'energy')
-				if(e>Math.floor(p/100)&&p>0){
+				p=300-room.getAmountByTo(room.controller.id,'energy')
+				if(e>50&&p>0){
 					for(var i=0;i<Math.floor(p/50);i++){
-						room.creatTask(TASK_WORK,50,"energy",a.id,room.controller.id,work)
+						room.creatTask(TASK_WORK,50,"energy",a.id,room.controller.id,work,true)
 					}
 				}
 			}
@@ -65,6 +68,7 @@ module.exports={
 		var carry=[0,0,0,0,0,0,2,2]
 		var work=[1,0,0,0,0,0,1,2]
 		var upgrade=[2,0,0,0,0,0,1,3]
+		var resources=this.dropedEnergy(room)
 		if(room.energyAvailable<room.energyCapacityAvailable){
 			var spawn=room.spawns[0]
 			var s=spawn.store.getFreeCapacity()-room.getAmountByTo(spawn.id,'energy')
@@ -72,12 +76,13 @@ module.exports={
 				var resources=this.dropedEnergy(room)
 				for(var a of resources){
 					var e=a-room.getAmountByFrom(a.id,'energy')
-					if(e>s){
+					s=spawn.store.getFreeCapacity()-room.getAmountByTo(spawn.id,'energy')
+					if(e>100&&s>0){
 						for(var i=0;i<Math.floor(s/100);i++){
-							room.creatTask(TASK_CARRY,100,"energy",a.id,room.spawn[0].id,carry)
+							room.creatTask(TASK_CARRY,100,"energy",a.id,room.spawn[0].id,carry,true)
 						}
 						if(s%100!=0){
-							room.creatTask(TASK_CARRY,s%100,"energy",a.id,room.spawn[0].id,carry)
+							room.creatTask(TASK_CARRY,s%100,"energy",a.id,room.spawn[0].id,carry,true)
 						}
 					}
 				}
@@ -89,12 +94,13 @@ module.exports={
 					var resources=this.dropedEnergy(room)
 					for(var a of resources){
 						var e=a.amount-room.getAmountByFrom(a.id,'energy')
-						if(e>Math.floor(z/50)&&z>0){
+						z=ex.store.getFreeCapacity()-room.getAmountByTo(ex.id,'energy')
+						if(e>50&&z>0){
 							for(var i=0;i<Math.floor(z/50);i++){
-								room.creatTask(TASK_CARRY,50,"energy",a.id,ex.id,carry)
+								room.creatTask(TASK_CARRY,50,"energy",a.id,ex.id,carry,true)
 							}
 							if(z%100!=0){
-								room.creatTask(TASK_CARRY,z%50,"energy",a.id,ex.id,carry)
+								room.creatTask(TASK_CARRY,z%50,"energy",a.id,ex.id,carry,true)
 							}
 						}
 					}
@@ -106,17 +112,18 @@ module.exports={
 			sites=room.find(FIND_CONSTRUCTION_SITES)
 			if(sites.length>0){
 				for(var site of sites){
+					var amount=site.progressTotal/4
 					var m=site.processtotal-room.getAmountByTo(site.id,'energy')
 					if(m>0){
 						var resources=this.dropedEnergy(room)
 						for(var a of resources){
 							var e=a.amount-room.getAmountByFrom(a.id,'energy')
-							if(e>Math.floor(m/2500)&&m>0){
-								for(var i=0;i<Math.floor(m/2500);i++){
-									room.creatTask(TASK_WORK,2500,"energy",a.id,site.id,work)
+							if(e>amount&&m>0){
+								for(var i=0;i<Math.floor(m/amount);i++){
+									room.creatTask(TASK_WORK,amount,"energy",a.id,site.id,work,true)
 								}
-								if(m%2500>0){
-									room.creatTask(TASK_WORK,m%2500,"energy",a.id,site.id,work)
+								if(m%amount>0){
+									room.creatTask(TASK_WORK,m%amount,"energy",a.id,site.id,work,true)
 								}
 							}
 						}
@@ -129,9 +136,10 @@ module.exports={
 		if(p>0){
 			for(var a of resources){
 				var e=a.amount-room.getAmountByFrom(a.id)
-				if(e>Math.floor(p/100)&&p>0){
+				p=500-room.getAmountByTo(room.controller.id,'energy')
+				if(e>50&&p>0){
 					for(var i=0;i<Math.floor(p/50);i++){
-						room.creatTask(TASK_WORK,50,"energy",a.id,room.controller.id,work)
+						room.creatTask(TASK_WORK,50,"energy",a.id,room.controller.id,work,true)
 					}
 				}
 			}

@@ -3,7 +3,7 @@ module.exports={
         Room.prototype.cancelTask=function(taskId){
             for(var i in this.memory.tasks){
                 if(this.memory.tasks[i].id==taskId){
-                    console.log(this.name+" "+this.memory.tasks[i].type+" "+i+" removed")
+                    console.log(this.name+" "+this.memory.tasks[i].type+" "+taskId+" removed")
                     this.memory.tasks.splice(i)
                     return 0
                 }
@@ -19,7 +19,7 @@ module.exports={
                 resourceType:taskResourceType,
                 from:fromId,
                 to:toId,
-                needBodyParts:needBodyPart,//[WORK数,ATTACK数,RANGED_ATTACK数,HEAL数,TOUGH数,CLAIM数,CARRY数,MOVE数]
+                needBodyParts:needBodyPart,//[WORK数,ATTACK数,RANGED_ATTACK数,HEAL数,CLAIM数,TOUGH数,CARRY数,MOVE数]
                 needVisa:ifNeedVisa,
                 isDoing:0
             })
@@ -45,7 +45,7 @@ module.exports={
 		        for(var i in Room.memory.tasks){
 		            if(Room.memory.tasks[i].id==task.id){
 		                Room.memory.tasks[i]=task
-		                console.log(Room.name+" "+task.type+" "+i+" given back")
+		                console.log(Room.name+" "+task.type+" "+task.id+" given back")
 		                return 0
 		            }
 		        }

@@ -1,6 +1,5 @@
 module.exports={
 	run:function(room){
-
 		//房间最少数量
 		const numberController1=[//work,carry,center
 			[2,2,0],
@@ -42,7 +41,6 @@ module.exports={
 			}
 
 		}
-
 		//任务分配开始
 		for(var m in room.memory.tasks){
 
@@ -51,7 +49,6 @@ module.exports={
 
 			if(!task.isDoing){
 				//是否空闲
-
 				var beenDeal = false//这里可能出现抢单情况所以加个变量约束,先到先得 
 
 				var availableCreepNumber = 0//统计可用数量,为数量控制做准备
@@ -63,13 +60,13 @@ module.exports={
 
 						for(var index=0;index<8;index++){
 
-							if(creep.getActiveBodyParts(bodyPartList[index]) >= task.needBodyParts[index]){	//检查bodypart是否符合标准
+							if(creep.getActiveBodyparts(bodyPartList[index]) >= task.needBodyParts[index]){	//检查bodypart是否符合标准
 
 								if(index == 7){	//检查完毕
 
 									availableCreepNumber++	//可用数量增加
 
-									if(creep.taskList.length < 2 && !beenDeal){	//如果空闲且没被抢,接受任务
+									if(creep.memory.taskList.length < 2 && !beenDeal){	//如果空闲且没被抢,接受任务
 
 										if(room.dealTask(task,creep)){	//康康能不能成功
 
@@ -90,7 +87,7 @@ module.exports={
 							}
 
 							else{
-
+								
 								break	//检测到不合格部分
 
 							}
@@ -111,19 +108,17 @@ module.exports={
 					case TASK_WORK:leastCreepNum=numberController1[level][0]
 
 									 maxTaskNum=numberController2[level][0]
-
+									 break
 					case TASK_CARRRY:leastCreepNum=numberController1[level][1]
 
 									 maxTaskNum=numberController2[level][1]
-
+									 break
 					case TASK_CENTER:leastCreepNum=numberController1[level][2]
 
 									 maxTaskNum=numberController2[level][2]
 
 				}
-
 				if(availableCreepNumber < leastCreepNum || room.getTaskByType(task.type) > maxTaskNum){	//数量不够
-
 					function getAvaliableSpawn(roomName){
 
 					    for (var spawnName in Game.spawns){
@@ -169,7 +164,7 @@ module.exports={
 
 					var availableSpawn=getAvaliableSpawn(room.name)
 
-					availableSpawn.spawnCreep(body,newName,{memory:{role:task.type,roomname:i,taskList:[]}})//这里就是记录的房间号
+					availableSpawn.spawnCreep(body,newName,{memory:{role:task.type,roomname:creep.room.name,taskList:[]}})//这里就是记录的房间号
 
 				}
 

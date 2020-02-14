@@ -44,7 +44,7 @@ module.exports={
 			}
 			else{
 				if(!from.store){
-					if(creep.withdraw(from,type)==ERR_NOT_IN_RANGE){
+					if(creep.pick(from,type,amount)==ERR_NOT_IN_RANGE){
 						e=creep.moveByPath(creep.memory.path1);
 	                    if(e==ERR_NOT_FOUND){
 	                        creep.memory.path1=creep.pos.findPathTo(from)
@@ -53,7 +53,7 @@ module.exports={
 					}
 				}
 				else{
-					if(creep.withdraw(from,type)==ERR_NOT_IN_RANGE){
+					if(creep.withdraw(from,type,amount)==ERR_NOT_IN_RANGE){
 						e=creep.moveByPath(creep.memory.path1);
 	                    if(e==ERR_NOT_FOUND){
 	                        creep.memory.path1=creep.pos.findPathTo(from)
