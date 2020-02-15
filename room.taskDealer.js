@@ -15,7 +15,7 @@ module.exports={
 		//任务堆积最大数量
 		const numberController2=[//work,carry,center
 			[3,3,0],
-			[3,3,0],
+			[,3,0],
 			[3,4,0],
 			[3,4,0],
 			[2,4,0],
@@ -105,15 +105,15 @@ module.exports={
 
 				switch(task.type){
 
-					case TASK_WORK:leastCreepNum=numberController1[level][0]
+					case 'task_work':leastCreepNum=numberController1[level][0]
 
 									 maxTaskNum=numberController2[level][0]
 									 break
-					case TASK_CARRRY:leastCreepNum=numberController1[level][1]
+					case 'task_carry':leastCreepNum=numberController1[level][1]
 
 									 maxTaskNum=numberController2[level][1]
 									 break
-					case TASK_CENTER:leastCreepNum=numberController1[level][2]
+					case 'task_center':leastCreepNum=numberController1[level][2]
 
 									 maxTaskNum=numberController2[level][2]
 

@@ -2,9 +2,9 @@ module.exports={
 	bury:function(){
 		for(var cn in Memory.creeps){
 			if(!Game.creeps[cn]){
-				if(Memory.creeps[cn].role!=undefined){
-					taskGiveBack(cn);
-				}
+				// if(Memory.creeps[cn].role!=undefined){
+				// 	taskGiveBack(cn);
+				// }
 				delete Memory.creeps[cn]
 			}
 		}

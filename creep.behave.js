@@ -8,14 +8,16 @@ module.exports={
 				creep.memory.doing=creep.memory.taskList[0]
 				creep.memory.taskList.splice(0)
 			}
-			else{
+			else if(creep.memory.role){
 				creep.say('Zzz')
 			}
 		}
 		else{
 			switch(creep.memory.role){
 				case TASK_CARRY:require('creep.task.carry').run(creep)
+				break
 				case TASK_CENTER:require('creep.task.center').run(creep)
+				break
 				case TASK_WORK:require('creep.task.work').run(creep)
 			}
 		}

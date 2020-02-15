@@ -1,15 +1,15 @@
 module.exports={
 	run:function(creep){
 		var total=creep.memory.doing.amount
-		var from=Game.gatObjectById(creep.memory.doing.from)
-		var to=Game.gatObjectById(creep.memory.doing.to)
+		var from=Game.getObjectById(creep.memory.doing.from)
+		var to=Game.getObjectById(creep.memory.doing.to)
 		var type=creep.memory.doing.resourceType
 		//清理无关资源
-		if(creep.store.getUsedCapacity()>=creep.getUsedCapacity(type)){
+		if(creep.store.getUsedCapacity()>creep.store.getUsedCapacity(type)){
 			if(creep.room.storage==null||creep.room.storage!=null&&creep.room.storage.getFreeCapacity()==0){
 				for(var t of RESOURCES_ALL){
 					creep.drop(t)
-					creep.say("clearing uselsee resource")
+					creep.say("clearing")
 				}
 			}
 			else{
@@ -33,11 +33,11 @@ module.exports={
 		}
 		//取资源
 
-		if(creep.store.getCapacity(type)<total&&total<=creep.getActiveBodyParts(CARRY)*50||creep.store.getCapacity(type)<getActiveBodyParts(CARRY)*50&&total>creep.getActiveBodyParts(CARRY)*50){
-			if(total<=creep.getActiveBodyParts(CARRY)*50){
+		if(creep.store.getUsedCapacity(type)<total&&total<=creep.store.getUsedCapacity()||creep.store.getCapacity(type)<creep.store.getCapacity()&&total>ccreep.store.getCapacity()){
+			if(total<=creep.store.getCapacity()){
 			amount=total-creep.store.getCapacity(type)
 			}
-			if(total>creep.getActiveBodyParts(CARRY)*50){
+			if(total>creep.creep.store.getCapacity()){
 				amount=creep.store.getFreeCapacity()
 			}
 			if(creep.memory.path1==null){
@@ -59,16 +59,17 @@ module.exports={
 				creep.memory.path2=creep.pos.findPathTo(to)
 			}
 			else{
-				if(creep.transfer(to,type)==ERR_NOT_IN_RANGE){
-					e=creep.moveByPath(creep.memory.path1);
+				var t=creep.transfer(to,type)
+				if(t==ERR_NOT_IN_RANGE){
+					e=creep.moveByPath(creep.memory.path2);
                     if(e==ERR_NOT_FOUND){
-                        creep.memory.path1=creep.pos.findPathTo(from)
-                        creep.moveByPath(creep.memory.path1)
+                        creep.memory.path1=creep.pos.findPathTo(to)
+                        creep.moveByPath(creep.memory.path2)
                     }
 				}
-				else{
+				if(t==OK){
 					//保存任务进度
-					creep.memory.doing.amount=total-creep.store.getCapacity(type);
+					creep.memory.doing.amount=total-creep.store.getUsedCapacity(type);
 					//判断是否完成任务
 					if(creep.memory.doing.amount<=0){
 						creep.room.cancelTask(creep.memory.doing.id)

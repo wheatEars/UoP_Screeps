@@ -13,7 +13,8 @@ require('prototype.Creep.move').moveCache.clear();
 
 
 module.exports.loop = function () {
-    //Memory.rooms['E9N8'].tasks=[]
+   // Memory.rooms['E9N8'].tasks=[]
+   Game.getObjectById('073447eae976835').setLevel(2)
     room.run()
     creep.run()
     SourceKeeperCtrl.run('E9N8')

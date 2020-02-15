@@ -7,7 +7,7 @@ module.exports={
 		if(a==ERR_NOT_IN_RANGE){
 			var e=creep.moveByPath(creep.memory.path2,{ignore:false})
 			if(e==ERR_NOT_FOUND){
-				creep.memory.path2==creep.pos.findPathTo(target)
+				creep.memory.path2=creep.pos.findPathTo(target)
 				creep.moveByPath(creep.memory.path2,{ignore:false})
 			}
 		}
@@ -20,7 +20,7 @@ module.exports={
 		if(a==ERR_NOT_IN_RANGE){
 			var e=creep.moveByPath(creep.memory.path2,{ignore:false})
 			if(e==ERR_NOT_FOUND){
-				creep.memory.path2==creep.pos.findPathTo(target)
+				creep.memory.path2=creep.pos.findPathTo(target)
 				creep.moveByPath(creep.memory.path2,{ignore:false})
 			}
 		}
@@ -33,7 +33,12 @@ module.exports={
 		if(a==ERR_NOT_IN_RANGE){
 			var e=creep.moveByPath(creep.memory.path2,{ignore:false})
 			if(e==ERR_NOT_FOUND){
-				creep.memory.path2==creep.pos.findPathTo(target)
+				creep.memory.path2=creep.pos.findPathTo(target)
+				creep.moveByPath(creep.memory.path2,{ignore:false})
+			}
+		}
+		else{
+			if(Game.time%5==0){
 				creep.moveByPath(creep.memory.path2,{ignore:false})
 			}
 		}
@@ -45,6 +50,12 @@ module.exports={
 		}
 		else{
 			var a
+			if(from==null){
+				creep.room.cancelTask(creep.memory.doing.id)
+				delete creep.memory.doing
+				creep.say("你让我找啥")
+				return 0
+			}
 			if(!from.store){
 				let t=creep.pickup(from,'energy')
 				if(t==ERR_NOT_IN_RANGE){
@@ -78,6 +89,7 @@ module.exports={
 				if(total>creep.getActiveBodyparts(CARRY)*50){
 					creep.memory.amount=creep.store.getFreeCapacity()
 				}
+				a=null
 			}
 		}
 	},

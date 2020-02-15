@@ -29,7 +29,7 @@ module.exports={
             for(var i in this.memory.tasks){
                 if(this.memory.tasks[i].id==task.id){
                     this.memory.tasks[i].isDoing=1
-                    creep.say(creep.name+" got "+this.memory.tasks[i].type+this.memory.tasks[i].id)
+                    creep.say("got "+this.memory.tasks[i].type+this.memory.tasks[i].id)
                     return 1
                 }
             }
@@ -37,9 +37,14 @@ module.exports={
         }
         global.taskGiveBack=function(creepname){
         	mem=Memory.creeps[creepname]
-        	mem.taskList.push(mem.doing)
+            if(creep.memory.doing){
+        	   mem.taskList.push(mem.doing)
+            }
 		    delete mem.doing
             var Room=Game.rooms[mem.roomname]
+            if(mem.taskList.length==0){
+                return 0
+            }
             for(var j in mem.taskList){
             	var task=mem.taskList[j]
 		        for(var i in Room.memory.tasks){
@@ -62,7 +67,8 @@ module.exports={
         Room.prototype.getTaskByType=function(type){
         	var array=new Array()
             for(var i in this.memory.tasks){
-                if(this.memory.tasks[i].type==type){
+                var m=this.memory.tasks[i]
+                if(m.type==type||!m.doing){
                     array.push(this.memory.tasks[i])
                 }
             }
