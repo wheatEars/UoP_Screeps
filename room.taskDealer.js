@@ -15,7 +15,7 @@ module.exports={
 		//任务堆积最大数量
 		const numberController2=[//work,carry,center
 			[3,3,0],
-			[,3,0],
+			[2,3,0],
 			[3,4,0],
 			[3,4,0],
 			[2,4,0],
@@ -32,7 +32,7 @@ module.exports={
 
 		for(var m in Game.creeps){
 
-			creep=Game.creeps[m]
+			var creep=Game.creeps[m]
 
 			//这里每个creep出生时都有房间号的memory
 			if(creep.memory.roomname==room.name){

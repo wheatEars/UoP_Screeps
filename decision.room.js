@@ -107,7 +107,7 @@ module.exports={
 			}
 		}
 		//建造
-		if(Game.time%50==0){
+		if(Game.time%10==0){
 			sites=room.find(FIND_CONSTRUCTION_SITES)
 			if(sites.length>0){
 				for(var site of sites){
@@ -135,10 +135,10 @@ module.exports={
 		if(p>0){
 			for(var a of resources){
 				var e=a.amount-room.getAmountByFrom(a.id)
-				p=500-room.getAmountByTo(room.controller.id,'energy')
+				p=300-room.getAmountByTo(room.controller.id,'energy')
 				if(e>p){
 					for(var i=0;i<Math.floor(p/50);i++){
-						room.creatTask(TASK_WORK,50,"energy",a.id,room.controller.id,work,true)
+						room.creatTask(TASK_WORK,50,"energy",a.id,room.controller.id,upgrade,true)
 					}
 				}
 			}

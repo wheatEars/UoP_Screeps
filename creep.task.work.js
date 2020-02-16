@@ -83,11 +83,11 @@ module.exports={
 				}
 			}
 			if(a==OK){
-				if(total<=creep.getActiveBodyparts(CARRY)*50){
-				creep.memory.amount=total-creep.store.getCapacity('energy')
+				if(total<=creep.store.getCapacity('energy')){
+				creep.memory.amount=total-creep.store.getUsedCapacity('energy')
 				}
-				if(total>creep.getActiveBodyparts(CARRY)*50){
-					creep.memory.amount=creep.store.getFreeCapacity()
+				if(total>creep.store.getCapacity('energy')){
+					creep.memory.amount=creep.store.getCapacity()
 				}
 				a=null
 			}

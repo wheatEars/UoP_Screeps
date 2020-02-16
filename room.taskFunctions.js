@@ -8,7 +8,7 @@ module.exports={
                     return 0
                 }
             }
-            console.log("Err task not founded")
+            console.log("Err task "+taskId+" not founded")
         }
         Room.prototype.creatTask=function(taskType,taskAmount,taskResourceType,fromId,toId,needBodyPart,ifNeedVisa){
             var randomId=Game.time+this.memory.tasks.length
@@ -23,6 +23,7 @@ module.exports={
                 needVisa:ifNeedVisa,
                 isDoing:0
             })
+            return randomId
         }
         Room.prototype.dealTask=function(task,creep){
             creep.memory.taskList.push(task);
@@ -37,7 +38,7 @@ module.exports={
         }
         global.taskGiveBack=function(creepname){
         	mem=Memory.creeps[creepname]
-            if(creep.memory.doing){
+            if(mem.doing){
         	   mem.taskList.push(mem.doing)
             }
 		    delete mem.doing
